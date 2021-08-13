@@ -1,0 +1,240 @@
+const checkBtn = document.querySelector("#check-btn");
+
+let output = document.createElement("div");
+output.classList.add("output");
+
+const getDateFormats = (day, month, year) => {
+  let dateFormats = [
+    {
+      name: "DD/MM/YYYY",
+      value: day + month + year,
+      formattedStr: day + "/" + month + "/" + year,
+    },
+    {
+      name: "MM/DD/YYYY",
+      value: month + day + year,
+      formattedStr: month + "/" + day + "/" + year,
+    },
+    {
+      name: "MM/YYYY/DD",
+      value: month + year + day,
+      formattedStr: month + "/" + year + "/" + day,
+    },
+    {
+      name: "DD/YYYY/MM",
+      value: day + year + month,
+      formattedStr: day + "/" + year + "/" + month,
+    },
+    {
+      name: "YYYY/DD/MM",
+      value: year + day + month,
+      formattedStr: year + "/" + day + "/" + month,
+    },
+    {
+      name: "YYYY/MM/DD",
+      value: year + month + day,
+      formattedStr: year + "/" + month + "/" + day,
+    },
+  ];
+  return dateFormats;
+};
+
+const nonLeapYearMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const leapYearMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+const calculateForwardPalindrome = (day, month, year, noOfForwardDays) => {
+  let yearInt = parseInt(year);
+  let monthInt = parseInt(month);
+  let dayInt = parseInt(day);
+
+  let isLeapYear = false;
+  if (yearInt % 4 === 0) {
+    if (yearInt % 100 !== 0 || (yearInt % 100 === 0 && yearInt % 400 !== 0)) {
+      isLeapYear = true;
+    }
+  }
+
+  let months = undefined;
+  if (isLeapYear) {
+    months = leapYearMonths;
+  } else months = nonLeapYearMonths;
+
+  let maxNoOfDaysInCurrMonth = months[monthInt - 1];
+
+  dayInt += 1;
+  noOfForwardDays += 1;
+
+  if (dayInt > maxNoOfDaysInCurrMonth) {
+    if (monthInt !== 12)
+      return calculateForwardPalindrome(
+        "01",
+        (monthInt + 1).toString().padStart(2, "0"),
+        yearInt.toString().padStart(4, "0"),
+        noOfForwardDays
+      );
+    else
+      return calculateForwardPalindrome(
+        "01",
+        "01",
+        (yearInt + 1).toString().padStart(4, "0"),
+        noOfForwardDays
+      );
+  }
+
+  let dateFormats = getDateFormats(
+    dayInt.toString().padStart(2, "0"),
+    monthInt.toString().padStart(2, "0"),
+    yearInt.toString().padStart(4, "0")
+  );
+
+  let res = undefined;
+  let isPalindrome = false;
+  dateFormats.forEach((dateFormat) => {
+    let date = dateFormat.value;
+    let dateRev = date.split("").reverse().join("");
+    if (dateRev === date) {
+      res = [dateFormat.formattedStr, noOfForwardDays, dateFormat.name];
+      isPalindrome = true;
+      return;
+    }
+  });
+  if (isPalindrome) return res;
+
+  return calculateForwardPalindrome(
+    dayInt.toString().padStart(2, "0"),
+    monthInt.toString().padStart(2, "0"),
+    yearInt.toString().padStart(4, "0"),
+    noOfForwardDays
+  );
+};
+
+const calculateBackwardPalindrome = (day, month, year, noOfBackwardDays) => {
+  let yearInt = parseInt(year);
+  let monthInt = parseInt(month);
+  let dayInt = parseInt(day);
+
+  let isLeapYear = false;
+  if (yearInt % 4 === 0) {
+    if (yearInt % 100 !== 0 || (yearInt % 100 === 0 && yearInt % 400 !== 0)) {
+      isLeapYear = true;
+    }
+  }
+
+  let months = undefined;
+  if (isLeapYear) {
+    months = leapYearMonths;
+  } else months = nonLeapYearMonths;
+
+  let maxNoOfDaysInPrevMonth = undefined;
+  if (monthInt - 2 >= 0) {
+    maxNoOfDaysInPrevMonth = months[monthInt - 2];
+  } else {
+    maxNoOfDaysInPrevMonth = 31;
+  }
+  let minNoOfDaysInCurrMonth = 1;
+
+  dayInt -= 1;
+  noOfBackwardDays += 1;
+
+  if (dayInt < minNoOfDaysInCurrMonth) {
+    if (monthInt > 1)
+      return calculateBackwardPalindrome(
+        maxNoOfDaysInPrevMonth.toString().padStart(2, "0"),
+        (monthInt - 1).toString().padStart(2, "0"),
+        yearInt.toString().padStart(4, "0"),
+        noOfBackwardDays
+      );
+    else
+      return calculateBackwardPalindrome(
+        maxNoOfDaysInPrevMonth.toString().padStart(2, "0"),
+        months.length.toString().padStart(2, "0"),
+        (yearInt - 1).toString().padStart(4, "0"),
+        noOfBackwardDays
+      );
+  }
+
+  let dateFormats = getDateFormats(
+    dayInt.toString().padStart(2, "0"),
+    monthInt.toString().padStart(2, "0"),
+    yearInt.toString().padStart(4, "0")
+  );
+
+  let res = undefined;
+  let isPalindrome = false;
+  dateFormats.forEach((dateFormat) => {
+    let date = dateFormat.value;
+    let dateRev = date.split("").reverse().join("");
+    if (dateRev === date) {
+      res = [dateFormat.formattedStr, noOfBackwardDays, dateFormat.name];
+      isPalindrome = true;
+      return;
+    }
+  });
+  if (isPalindrome) return res;
+
+  return calculateBackwardPalindrome(
+    dayInt.toString().padStart(2, "0"),
+    monthInt.toString().padStart(2, "0"),
+    yearInt.toString().padStart(4, "0"),
+    noOfBackwardDays
+  );
+};
+
+checkBtn.addEventListener("click", (event) => {
+  while (document.querySelectorAll("output").length > 0) {
+    output.remove();
+  }
+
+  let dobVal = document.querySelector("#dob-input").value;
+  console.log("DOB: " + dobVal);
+  console.log("Type of DOB: " + typeof dobVal);
+
+  let endVal = dobVal.indexOf("-");
+  let year = dobVal.substring(0, endVal);
+  let remDobVal = dobVal.substring(endVal + 1);
+  endVal = remDobVal.indexOf("-");
+  let month = remDobVal.substring(0, endVal);
+  remDobVal = remDobVal.substring(endVal + 1);
+  let day = remDobVal;
+
+  console.log("Year: " + year);
+  console.log("Month: " + month);
+  console.log("Day: " + day);
+
+  let dateFormats = getDateFormats(day, month, year);
+
+  let isPalindrome = false;
+  dateFormats.forEach((dateFormat) => {
+    let date = dateFormat.value;
+    let dateRev = date.split("").reverse().join("");
+    if (dateRev === date) {
+      output.innerHTML = `
+            <h2 class="output__format">Format selected: ${dateFormat.name}</h2>
+            <h2 class = "output__date">DOB selected: ${dateFormat.formattedStr}</h2>
+          `;
+      isPalindrome = true;
+      return;
+    }
+  });
+  if (!isPalindrome) {
+    output.innerHTML = `<h2>We're sorry to inform that your DOB is not a palindrome in any way possible.</h2>`;
+
+    let [forwardDate, noOfForwardDays, forwardDateFormat] =
+      calculateForwardPalindrome(day, month, year, 0);
+    let [backwardDate, noOfBackwardDays, backwardDateFormat] =
+      calculateBackwardPalindrome(day, month, year, 0);
+
+    if (noOfForwardDays <= noOfBackwardDays) {
+      output.innerHTML += `
+        <h2 class="output__text">The nearest date from your birthdate would be ${forwardDate} in ${forwardDateFormat} format.</h2>
+        <h2 class="output__text">You missed it by ${noOfForwardDays} days.</h2>
+        `;
+    } else {
+      output.innerHTML += `
+        <h2 class="output__text">The nearest date from your birthdate would be ${backwardDate} in ${backwardDateFormat} format.</h2>
+        <h2 class="output__text">You missed it by ${noOfBackwardDays} days.</h2>
+        `;
+    }
+    document.body.appendChild(output);
+  }
+});

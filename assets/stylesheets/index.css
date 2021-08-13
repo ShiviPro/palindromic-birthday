@@ -1,3 +1,7 @@
 body {
   text-align: center;
 }
+.check-btn {
+  display: block;
+  margin: 20px auto;
+}
