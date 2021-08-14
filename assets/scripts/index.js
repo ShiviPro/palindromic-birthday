@@ -1,7 +1,17 @@
+const primaryContent = document.querySelector("#primary-content");
 const checkBtn = document.querySelector("#check-btn");
+
+let loading = document.createElement("div");
+loading.classList.add("loading");
+primaryContent.appendChild(loading);
+loading.style.display = "none";
 
 let output = document.createElement("div");
 output.classList.add("output");
+output.innerHTML = `
+  <h2>Result will be shown here</h2>
+`;
+primaryContent.appendChild(output);
 
 const getDateFormats = (day, month, year) => {
   let dateFormats = [
@@ -181,60 +191,69 @@ const calculateBackwardPalindrome = (day, month, year, noOfBackwardDays) => {
 };
 
 checkBtn.addEventListener("click", (event) => {
-  while (document.querySelectorAll("output").length > 0) {
-    output.remove();
-  }
+  loading.style.display = "block";
+  output.style.opacity = 0;
+  setTimeout(() => {
+    let isDOBEmpty = false;
 
-  let dobVal = document.querySelector("#dob-input").value;
-  console.log("DOB: " + dobVal);
-  console.log("Type of DOB: " + typeof dobVal);
+    let dobVal = document.querySelector("#dob-input").value;
+    console.log("DOB: " + dobVal);
+    console.log("Type of DOB: " + typeof dobVal);
 
-  let endVal = dobVal.indexOf("-");
-  let year = dobVal.substring(0, endVal);
-  let remDobVal = dobVal.substring(endVal + 1);
-  endVal = remDobVal.indexOf("-");
-  let month = remDobVal.substring(0, endVal);
-  remDobVal = remDobVal.substring(endVal + 1);
-  let day = remDobVal;
+    let endVal = dobVal.indexOf("-");
+    let year = dobVal.substring(0, endVal);
+    let remDobVal = dobVal.substring(endVal + 1);
+    endVal = remDobVal.indexOf("-");
+    let month = remDobVal.substring(0, endVal);
+    remDobVal = remDobVal.substring(endVal + 1);
+    let day = remDobVal;
 
-  console.log("Year: " + year);
-  console.log("Month: " + month);
-  console.log("Day: " + day);
-
-  let dateFormats = getDateFormats(day, month, year);
-
-  let isPalindrome = false;
-  dateFormats.forEach((dateFormat) => {
-    let date = dateFormat.value;
-    let dateRev = date.split("").reverse().join("");
-    if (dateRev === date) {
+    if (day === "" || month === "" || year === "") {
       output.innerHTML = `
+      <h2>Hmmm.. trying to enter nothing. That's smart. <i class="fas fa-smile-wink"></i></h2>
+      `;
+      isDOBEmpty = true;
+    }
+
+    if (!isDOBEmpty) {
+      let dateFormats = getDateFormats(day, month, year);
+
+      let isPalindrome = false;
+      dateFormats.forEach((dateFormat) => {
+        let date = dateFormat.value;
+        let dateRev = date.split("").reverse().join("");
+        if (dateRev === date) {
+          output.innerHTML = `
+            <h2>Congratulations ! <i class="fas fa-smile-beam"></i> Your birthdate is palindrome</h2>
             <h2 class="output__format">Format selected: ${dateFormat.name}</h2>
             <h2 class = "output__date">DOB selected: ${dateFormat.formattedStr}</h2>
           `;
-      isPalindrome = true;
-      return;
-    }
-  });
-  if (!isPalindrome) {
-    output.innerHTML = `<h2>We're sorry to inform that your DOB is not a palindrome in any way possible.</h2>`;
+          isPalindrome = true;
+          return;
+        }
+      });
+      if (!isPalindrome) {
+        output.innerHTML = `<h2>We're sorry <i class="fas fa-sad-tear"></i> to inform that your DOB is not a palindrome in any way possible.</h2>`;
 
-    let [forwardDate, noOfForwardDays, forwardDateFormat] =
-      calculateForwardPalindrome(day, month, year, 0);
-    let [backwardDate, noOfBackwardDays, backwardDateFormat] =
-      calculateBackwardPalindrome(day, month, year, 0);
+        let [forwardDate, noOfForwardDays, forwardDateFormat] =
+          calculateForwardPalindrome(day, month, year, 0);
+        let [backwardDate, noOfBackwardDays, backwardDateFormat] =
+          calculateBackwardPalindrome(day, month, year, 0);
 
-    if (noOfForwardDays <= noOfBackwardDays) {
-      output.innerHTML += `
+        if (noOfForwardDays <= noOfBackwardDays) {
+          output.innerHTML += `
         <h2 class="output__text">The nearest date from your birthdate would be ${forwardDate} in ${forwardDateFormat} format.</h2>
         <h2 class="output__text">You missed it by ${noOfForwardDays} days.</h2>
         `;
-    } else {
-      output.innerHTML += `
+        } else {
+          output.innerHTML += `
         <h2 class="output__text">The nearest date from your birthdate would be ${backwardDate} in ${backwardDateFormat} format.</h2>
         <h2 class="output__text">You missed it by ${noOfBackwardDays} days.</h2>
         `;
+        }
+      }
     }
-    document.body.appendChild(output);
-  }
+    loading.style.display = "none";
+    output.style.opacity = 1;
+  }, 1500);
 });

@@ -1,7 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap");
+:root {
+  --green: #0be881;
+  --blue: #0a3d62;
+  --white: #dff9fb;
+}
+
 body {
   text-align: center;
+  padding: 0;
+  margin: 0;
+  color: var(--blue);
+  font-family: "Cairo", sans-serif;
 }
-.check-btn {
+
+.navbar__brand {
+  background-color: var(--green);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.navbar__brand--theme-toggle {
+  text-align: left;
+}
+
+.hero {
+  background-color: var(--green);
+  display: grid;
+  padding: 20px;
+  grid-template-columns: 2fr 1fr;
+}
+
+.hero__brand-name-and-desc {
+  text-align: left;
+}
+
+.hero__brand-name {
+  margin: 20px 0 40px 0;
+  font-size: 2.5rem;
+}
+
+.hero__brand-desc {
+  font-size: 1.5rem;
+  margin: 20px 0;
+}
+
+.hero__brand-link,
+.src-link {
+  text-decoration: none;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--blue);
+  padding: 10px 20px;
+  border: 2px solid var(--blue);
+  border-radius: 10px;
   display: block;
+  width: fit-content;
+  transition: background-color 350ms;
+}
+
+.hero__brand-link {
+  margin-top: 50px;
+}
+
+.src-link {
   margin: 20px auto;
+}
+
+.hero__brand-link:hover,
+.src-link:hover {
+  background-color: var(--blue);
+  color: var(--green);
+}
+
+.hero__image {
+  height: 350px;
+  width: 350px;
+  fill: var(--blue);
+  padding: 0 0 20px 0;
+  position: relative;
+  bottom: 20px;
+}
+
+.highlight {
+  text-decoration: underline;
+}
+
+.primary-content {
+  padding: 50px;
+}
+
+.primary-content__heading {
+  font-size: 2rem;
+}
+
+.primary-content__desc {
+  font-size: 1.5rem;
+}
+
+.primary-content__dob-input,
+.primary-content__check-btn {
+  font-size: 1.7rem;
+  padding: 10px;
+  border: 2px solid var(--blue);
+  border-radius: 10px;
+  display: block;
+  margin: 40px auto;
+  color: var(--blue);
+  font-family: inherit;
+  outline: none;
+}
+
+.primary-content__dob-input {
+  background-color: var(--white);
+  width: 400px;
+  text-align: center;
+}
+
+.primary-content__check-btn {
+  background-color: var(--green);
+  padding: 5px 15px;
+  font-weight: 700;
+  transition: background-color 350ms, color 350ms;
+}
+
+.primary-content__check-btn:hover {
+  background-color: var(--blue);
+  color: var(--green);
+}
+
+.loading {
+  width: 20px;
+  height: 20px;
+  border: 10px solid var(--green);
+  border-top: 10px solid var(--blue);
+  transform: rotate(-45deg);
+  animation: load 1s infinite linear;
+  display: block;
+  margin: 0 auto;
+}
+
+@keyframes load {
+  25% {
+    border: 10px solid var(--green);
+    border-right: 10px solid var(--blue);
+  }
+  50% {
+    border: 10px solid var(--green);
+    border-bottom: 10px solid var(--blue);
+  }
+  75% {
+    border: 10px solid var(--green);
+    border-left: 10px solid var(--blue);
+  }
+}
+
+.output {
+  transition: opacity 500ms;
+}
+
+.footer {
+  background-color: var(--green);
+  padding: 20px 0;
+}
+
+.footer__links {
+  text-decoration: none;
+  color: var(--blue);
+  margin: 10px;
+  font-size: 1.5rem;
+  display: inline-block;
+  padding: 20px;
+  transition: transform 350ms ease-out;
+}
+
+.footer__links:hover {
+  transform: translateY(-10px) scale(1.4);
 }
