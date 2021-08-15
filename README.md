@@ -26,7 +26,6 @@ Let me tell you that PB can help you find if your birthdate is palindrome or not
 - So it will check if any of these variations would result in a palindrome.
 
 ![Palindromic Birthday demo image](./assets/images/demos/demo0.png)
-)
 
 - And if your birthdate is not a palindrome, it even gives you the nearest date to your Birthdate that is a palindrome.
 
