@@ -257,3 +257,115 @@ checkBtn.addEventListener("click", (event) => {
     output.style.opacity = 1;
   }, 1500);
 });
+
+let currentTheme = "GreenOnBlue";
+let themeToggler = document.querySelector(".navbar__brand--theme-toggler");
+let themeToggle = document.querySelector(
+  ".navbar__brand--theme-toggler__toggle"
+);
+
+themeToggler.addEventListener("click", () => {
+  if (currentTheme === "GreenOnBlue") {
+    themeToggle.classList.add("moveRight");
+    currentTheme = "BlueOnGreen";
+
+    document.body.classList.add(".body--dark");
+
+    document
+      .querySelector(".navbar__brand")
+      .classList.add("navbar__brand--dark");
+
+    document
+      .querySelector(".navbar__brand--theme-toggler")
+      .classList.add("navbar__brand--theme-toggler--dark");
+
+    document
+      .querySelector(".navbar__brand--theme-toggler__toggle")
+      .classList.add("navbar__brand--theme-toggler__toggle--dark");
+
+    document.querySelector(".hero").classList.add("hero--dark");
+
+    document
+      .querySelector(".hero__brand-link")
+      .classList.add("hero__brand-link--dark");
+
+    document.querySelector(".src-link").classList.add("src-link--dark");
+
+    document.querySelector(".hero__image").innerHTML = `
+    <use xlink:href="#calendar-img--dark" />
+    `;
+    document.querySelector(".hero__image").classList.add("hero__image--dark");
+
+    document
+      .querySelector(".primary-content")
+      .classList.add("primary-content--dark");
+
+    document
+      .querySelector(".primary-content__dob-input")
+      .classList.add("primary-content__dob-input--dark");
+
+    document
+      .querySelector(".primary-content__check-btn")
+      .classList.add("primary-content__check-btn--dark");
+
+    document.querySelector(".loading").classList.add("loading--dark");
+
+    document.querySelector(".footer").classList.add("footer--dark");
+
+    document.querySelectorAll(".footer__links").forEach((footerLink) => {
+      footerLink.classList.add("footer__links--dark");
+    });
+  } else {
+    themeToggle.classList.remove("moveRight");
+    currentTheme = "GreenOnBlue";
+
+    document.body.classList.remove(".body--dark");
+
+    document
+      .querySelector(".navbar__brand")
+      .classList.remove("navbar__brand--dark");
+
+    document
+      .querySelector(".navbar__brand--theme-toggler")
+      .classList.remove("navbar__brand--theme-toggler--dark");
+
+    document
+      .querySelector(".navbar__brand--theme-toggler__toggle")
+      .classList.remove("navbar__brand--theme-toggler__toggle--dark");
+
+    document.querySelector(".hero").classList.remove("hero--dark");
+
+    document
+      .querySelector(".hero__brand-link")
+      .classList.remove("hero__brand-link--dark");
+
+    document.querySelector(".src-link").classList.remove("src-link--dark");
+
+    document.querySelector(".hero__image").innerHTML = `
+    <use xlink:href="#calendar-img" />
+    `;
+    document
+      .querySelector(".hero__image")
+      .classList.remove("hero__image--dark");
+
+    document
+      .querySelector(".primary-content")
+      .classList.remove("primary-content--dark");
+
+    document
+      .querySelector(".primary-content__dob-input")
+      .classList.remove("primary-content__dob-input--dark");
+
+    document
+      .querySelector(".primary-content__check-btn")
+      .classList.remove("primary-content__check-btn--dark");
+
+    document.querySelector(".loading").classList.remove("loading--dark");
+
+    document.querySelector(".footer").classList.remove("footer--dark");
+
+    document.querySelectorAll(".footer__links").forEach((footerLink) => {
+      footerLink.classList.remove("footer__links--dark");
+    });
+  }
+});
