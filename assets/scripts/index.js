@@ -197,8 +197,6 @@ checkBtn.addEventListener("click", (event) => {
     let isDOBEmpty = false;
 
     let dobVal = document.querySelector("#dob-input").value;
-    console.log("DOB: " + dobVal);
-    console.log("Type of DOB: " + typeof dobVal);
 
     let endVal = dobVal.indexOf("-");
     let year = dobVal.substring(0, endVal);
