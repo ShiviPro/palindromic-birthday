@@ -283,9 +283,7 @@ themeToggler.addEventListener("click", () => {
 
     document.querySelector(".hero").classList.add("hero--dark");
 
-    document
-      .querySelector(".hero__brand-link")
-      .classList.add("hero__brand-link--dark");
+    document.querySelector(".hero__link").classList.add("hero__link--dark");
 
     document.querySelector(".src-link").classList.add("src-link--dark");
 
@@ -333,9 +331,7 @@ themeToggler.addEventListener("click", () => {
 
     document.querySelector(".hero").classList.remove("hero--dark");
 
-    document
-      .querySelector(".hero__brand-link")
-      .classList.remove("hero__brand-link--dark");
+    document.querySelector(".hero__link").classList.remove("hero__link--dark");
 
     document.querySelector(".src-link").classList.remove("src-link--dark");
 

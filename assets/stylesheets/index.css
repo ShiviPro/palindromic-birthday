@@ -70,21 +70,21 @@ body {
   color: var(--green);
 }
 
-.hero__brand-name-and-desc {
+.hero__text {
   text-align: left;
 }
 
-.hero__brand-name {
+.hero__text-1 {
   margin: 20px 0 40px 0;
   font-size: 2.5rem;
 }
 
-.hero__brand-desc {
+.hero__text-2 {
   font-size: 1.5rem;
   margin: 20px 0;
 }
 
-.hero__brand-link,
+.hero__link,
 .src-link {
   text-decoration: none;
   font-size: 1.3rem;
@@ -98,14 +98,14 @@ body {
   transition: background-color 350ms;
 }
 
-.hero__brand-link--dark,
+.hero__link--dark,
 .src-link--dark {
   color: var(--green);
   border-color: var(--green);
   background-color: var(--blue);
 }
 
-.hero__brand-link {
+.hero__link {
   margin-top: 50px;
 }
 
@@ -113,13 +113,13 @@ body {
   margin: 20px auto;
 }
 
-.hero__brand-link:hover,
+.hero__link:hover,
 .src-link:hover {
   background-color: var(--blue);
   color: var(--green);
 }
 
-.hero__brand-link--dark:hover,
+.hero__link--dark:hover,
 .src-link--dark:hover {
   background-color: var(--green);
   color: var(--blue);
