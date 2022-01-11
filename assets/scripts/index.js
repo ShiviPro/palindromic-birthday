@@ -1,12 +1,12 @@
 const primaryContent = document.querySelector("#primary-content");
 const checkBtn = document.querySelector("#check-btn");
 
-let loading = document.createElement("div");
+const loading = document.createElement("div");
 loading.classList.add("loading");
 primaryContent.appendChild(loading);
 loading.style.display = "none";
 
-let output = document.createElement("div");
+const output = document.createElement("div");
 output.classList.add("output");
 output.innerHTML = `
   <h2>Result will be shown here</h2>
@@ -14,7 +14,7 @@ output.innerHTML = `
 primaryContent.appendChild(output);
 
 const getDateFormats = (day, month, year) => {
-  let dateFormats = [
+  const dateFormats = [
     {
       name: "DD/MM/YYYY",
       value: day + month + year,
@@ -53,23 +53,21 @@ const nonLeapYearMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const leapYearMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 const calculateForwardPalindrome = (day, month, year, noOfForwardDays) => {
-  let yearInt = parseInt(year);
-  let monthInt = parseInt(month);
+  const yearInt = parseInt(year);
+  const monthInt = parseInt(month);
   let dayInt = parseInt(day);
 
   let isLeapYear = false;
   if (yearInt % 4 === 0) {
-    if (yearInt % 100 !== 0 || (yearInt % 100 === 0 && yearInt % 400 !== 0)) {
+    if (yearInt % 100 !== 0 || (yearInt % 100 === 0 && yearInt % 400 !== 0))
       isLeapYear = true;
-    }
   }
 
   let months = undefined;
-  if (isLeapYear) {
-    months = leapYearMonths;
-  } else months = nonLeapYearMonths;
+  if (isLeapYear) months = leapYearMonths;
+  else months = nonLeapYearMonths;
 
-  let maxNoOfDaysInCurrMonth = months[monthInt - 1];
+  const maxNoOfDaysInCurrMonth = months[monthInt - 1];
 
   dayInt += 1;
   noOfForwardDays += 1;
@@ -91,7 +89,7 @@ const calculateForwardPalindrome = (day, month, year, noOfForwardDays) => {
       );
   }
 
-  let dateFormats = getDateFormats(
+  const dateFormats = getDateFormats(
     dayInt.toString().padStart(2, "0"),
     monthInt.toString().padStart(2, "0"),
     yearInt.toString().padStart(4, "0")
@@ -99,9 +97,9 @@ const calculateForwardPalindrome = (day, month, year, noOfForwardDays) => {
 
   let res = undefined;
   let isPalindrome = false;
-  dateFormats.forEach((dateFormat) => {
-    let date = dateFormat.value;
-    let dateRev = date.split("").reverse().join("");
+  dateFormats.forEach(dateFormat => {
+    const date = dateFormat.value;
+    const dateRev = date.split("").reverse().join("");
     if (dateRev === date) {
       res = [dateFormat.formattedStr, noOfForwardDays, dateFormat.name];
       isPalindrome = true;
@@ -119,29 +117,25 @@ const calculateForwardPalindrome = (day, month, year, noOfForwardDays) => {
 };
 
 const calculateBackwardPalindrome = (day, month, year, noOfBackwardDays) => {
-  let yearInt = parseInt(year);
-  let monthInt = parseInt(month);
+  const yearInt = parseInt(year);
+  const monthInt = parseInt(month);
   let dayInt = parseInt(day);
 
   let isLeapYear = false;
   if (yearInt % 4 === 0) {
-    if (yearInt % 100 !== 0 || (yearInt % 100 === 0 && yearInt % 400 !== 0)) {
+    if (yearInt % 100 !== 0 || (yearInt % 100 === 0 && yearInt % 400 !== 0))
       isLeapYear = true;
-    }
   }
 
   let months = undefined;
-  if (isLeapYear) {
-    months = leapYearMonths;
-  } else months = nonLeapYearMonths;
+  if (isLeapYear) months = leapYearMonths;
+  else months = nonLeapYearMonths;
 
   let maxNoOfDaysInPrevMonth = undefined;
-  if (monthInt - 2 >= 0) {
-    maxNoOfDaysInPrevMonth = months[monthInt - 2];
-  } else {
-    maxNoOfDaysInPrevMonth = 31;
-  }
-  let minNoOfDaysInCurrMonth = 1;
+  if (monthInt - 2 >= 0) maxNoOfDaysInPrevMonth = months[monthInt - 2];
+  else maxNoOfDaysInPrevMonth = 31;
+  
+  const minNoOfDaysInCurrMonth = 1;
 
   dayInt -= 1;
   noOfBackwardDays += 1;
@@ -163,7 +157,7 @@ const calculateBackwardPalindrome = (day, month, year, noOfBackwardDays) => {
       );
   }
 
-  let dateFormats = getDateFormats(
+  const dateFormats = getDateFormats(
     dayInt.toString().padStart(2, "0"),
     monthInt.toString().padStart(2, "0"),
     yearInt.toString().padStart(4, "0")
@@ -171,9 +165,9 @@ const calculateBackwardPalindrome = (day, month, year, noOfBackwardDays) => {
 
   let res = undefined;
   let isPalindrome = false;
-  dateFormats.forEach((dateFormat) => {
-    let date = dateFormat.value;
-    let dateRev = date.split("").reverse().join("");
+  dateFormats.forEach(dateFormat => {
+    const date = dateFormat.value;
+    const dateRev = date.split("").reverse().join("");
     if (dateRev === date) {
       res = [dateFormat.formattedStr, noOfBackwardDays, dateFormat.name];
       isPalindrome = true;
@@ -190,21 +184,21 @@ const calculateBackwardPalindrome = (day, month, year, noOfBackwardDays) => {
   );
 };
 
-checkBtn.addEventListener("click", (event) => {
+checkBtn.addEventListener("click", () => {
   loading.style.display = "block";
   output.style.opacity = 0;
   setTimeout(() => {
     let isDOBEmpty = false;
 
-    let dobVal = document.querySelector("#dob-input").value;
+    const dobVal = document.querySelector("#dob-input").value;
 
     let endVal = dobVal.indexOf("-");
-    let year = dobVal.substring(0, endVal);
+    const year = dobVal.substring(0, endVal);
     let remDobVal = dobVal.substring(endVal + 1);
     endVal = remDobVal.indexOf("-");
-    let month = remDobVal.substring(0, endVal);
+    const month = remDobVal.substring(0, endVal);
     remDobVal = remDobVal.substring(endVal + 1);
-    let day = remDobVal;
+    const day = remDobVal;
 
     if (day === "" || month === "" || year === "") {
       output.innerHTML = `
@@ -214,12 +208,12 @@ checkBtn.addEventListener("click", (event) => {
     }
 
     if (!isDOBEmpty) {
-      let dateFormats = getDateFormats(day, month, year);
+      const dateFormats = getDateFormats(day, month, year);
 
       let isPalindrome = false;
-      dateFormats.forEach((dateFormat) => {
-        let date = dateFormat.value;
-        let dateRev = date.split("").reverse().join("");
+      dateFormats.forEach(dateFormat => {
+        const date = dateFormat.value;
+        const dateRev = date.split("").reverse().join("");
         if (dateRev === date) {
           output.innerHTML = `
             <h2>Congratulations ! <i class="fas fa-smile-beam"></i> Your birthdate is palindrome</h2>
@@ -233,9 +227,9 @@ checkBtn.addEventListener("click", (event) => {
       if (!isPalindrome) {
         output.innerHTML = `<h2>We're sorry <i class="fas fa-sad-tear"></i> to inform that your DOB is not a palindrome in any way possible.</h2>`;
 
-        let [forwardDate, noOfForwardDays, forwardDateFormat] =
+        const [forwardDate, noOfForwardDays, forwardDateFormat] =
           calculateForwardPalindrome(day, month, year, 0);
-        let [backwardDate, noOfBackwardDays, backwardDateFormat] =
+        const [backwardDate, noOfBackwardDays, backwardDateFormat] =
           calculateBackwardPalindrome(day, month, year, 0);
 
         if (noOfForwardDays <= noOfBackwardDays) {
@@ -257,8 +251,8 @@ checkBtn.addEventListener("click", (event) => {
 });
 
 let currentTheme = "GreenOnBlue";
-let themeToggler = document.querySelector(".navbar__brand--theme-toggler");
-let themeToggle = document.querySelector(
+const themeToggler = document.querySelector(".navbar__brand--theme-toggler");
+const themeToggle = document.querySelector(
   ".navbar__brand--theme-toggler__toggle"
 );
 
